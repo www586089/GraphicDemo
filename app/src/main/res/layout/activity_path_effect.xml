@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".activity.PathEffectActivity">
+
+            <com.zfang.graphicdemo.view.path.NoPathEffectView
+                android:id="@+id/no_path_effect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/corner_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <com.zfang.graphicdemo.view.path.CornerPathEffectView
+                android:id="@+id/corner_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/discrete_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/no_path_effect" />
+
+            <com.zfang.graphicdemo.view.path.DiscretePathEffectView
+                android:id="@+id/discrete_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/dash_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/corner_path_effect" />
+
+            <com.zfang.graphicdemo.view.path.DashPathEffectView
+                android:id="@+id/dash_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/path_dash_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/discrete_path_effect" />
+
+            <com.zfang.graphicdemo.view.path.PathDashPathEffectView
+                android:id="@+id/path_dash_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/compose_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dash_path_effect" />
+
+            <com.zfang.graphicdemo.view.path.ComposePathEffectView
+                android:id="@+id/compose_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/sum_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/path_dash_path_effect" />
+
+            <com.zfang.graphicdemo.view.path.SumPathEffectView
+                android:id="@+id/sum_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/invert"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/compose_path_effect" />
+
+            <TextView
+                android:id="@+id/invert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:text="反转(Invert)"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/map"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sum_path_effect" />
+
+            <TextView
+                android:id="@+id/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:text="Map(点映射)"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/invert" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>
