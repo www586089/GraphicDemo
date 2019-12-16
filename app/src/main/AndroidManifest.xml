@@ -27,6 +27,7 @@
         <activity android:name=".activity.MatrixActivity" />
         <activity android:name=".activity.PathEffectActivity" />
         <activity android:name=".activity.ColorFilterActivity" />
+        <activity android:name=".activity.cfilter.SingleChannelColorFilterActivity" />
     </application>
 
 </manifest>
