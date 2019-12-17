@@ -10,7 +10,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.zfang.graphicdemo.R
 import com.zfang.graphicdemo.common.px2Dp
-
+//https://www.jianshu.com/p/19997b0b5b24
 class PorterDuffColorFilterView2(context: Context?, attrs: AttributeSet?) :
     View(context, attrs) {
     private var TAG = "PorterDuffColorFilterView2"
