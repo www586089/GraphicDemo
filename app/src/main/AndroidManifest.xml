@@ -28,6 +28,15 @@
         <activity android:name=".activity.PathEffectActivity" />
         <activity android:name=".activity.ColorFilterActivity" />
         <activity android:name=".activity.cfilter.SingleChannelColorFilterActivity" />
+        <activity android:name=".activity.cfilter.LuminanceColorFilterActivity" />
+        <activity android:name=".activity.cfilter.LuminanceColorFilter2Activity" />
+        <activity android:name=".activity.cfilter.HueColorFilterActivity" />
+        <activity android:name=".activity.cfilter.HueColorFilter2Activity" />
+        <activity android:name=".activity.cfilter.SaturationFilterActivity" />
+        <activity android:name=".activity.cfilter.LightColorFilterActivity" />
+        <activity android:name=".activity.cfilter.PorterDuffColorFilterActivity" />
+        <activity android:name=".activity.cfilter.PorterDuffColorFilter2Activity" />
+        <activity android:name=".activity.TestActivity" />
     </application>
 
 </manifest>

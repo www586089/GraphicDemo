@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.zfang.graphicdemo.R
-import com.zfang.graphicdemo.activity.cfilter.SingleChannelColorFilterActivity
+import com.zfang.graphicdemo.activity.cfilter.*
 import com.zfang.graphicdemo.activity.matrix.*
 import com.zfang.graphicdemo.base.BaseActivity
 
@@ -26,31 +26,40 @@ class ColorFilterActivity : BaseActivity() {
         SingleChannelColorFilterActivity.start(this)
     }
 
-    fun onClickTranslate(view: View) {
-        TranslateActivity.start(this)
+    //调整亮度
+    fun onClickLuminance(view: View) {
+        LuminanceColorFilterActivity.start(this)
     }
 
-    fun onClickRotate(view: View) {
-        RotateActivity.start(this)
+    fun onClickLuminance2(view: View) {
+        LuminanceColorFilter2Activity.start(this)
     }
 
-    fun onClickScale(view: View) {
-        ScaleActivity.start(this)
+    //调整色调
+    fun onClickHue(view: View) {
+        HueColorFilterActivity.start(this)
     }
 
-    fun onClickSkew(view: View) {
-        SkewActivity.start(this)
+    fun onClickHue2(view: View) {
+        HueColorFilter2Activity.start(this)
     }
 
-    fun onClickClip(view: View) {
-        ClipActivity.start(this)
+    //调整颜色饱和度
+    fun onClickSaturation(view: View) {
+        SaturationFilterActivity.start(this)
     }
 
-    fun onClickInvert(view: View) {
-        InvertActivity.start(this)
+    //光线过滤
+    fun onClickLightColorFilter(view: View) {
+        LightColorFilterActivity.start(this)
     }
 
-    fun onClickMap(view: View) {
-        MapActivity.start(this)
+    //颜色混合
+    fun onClickPorterDuff(view: View) {
+        PorterDuffColorFilterActivity.start(this)
+    }
+
+    fun onClickPorterDuff2(view: View) {
+        PorterDuffColorFilter2Activity.start(this)
     }
 }

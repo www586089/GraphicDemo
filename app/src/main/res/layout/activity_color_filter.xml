@@ -16,59 +16,59 @@
         android:onClick="onClickSingleChannel"
         android:text="单通道变换"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/translate"
+        app:layout_constraintBottom_toTopOf="@id/luminance_controll"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/translate"
+        android:id="@+id/luminance_controll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickTranslate"
-        android:text="Translate"
+        android:onClick="onClickLuminance"
+        android:text="亮度控制"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/scale"
+        app:layout_constraintBottom_toTopOf="@id/luminance_controll2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/single_channel" />
 
     <TextView
-        android:id="@+id/scale"
+        android:id="@+id/luminance_controll2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickScale"
-        android:text="Scale"
+        android:onClick="onClickLuminance2"
+        android:text="亮度控制2"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/rotate"
+        app:layout_constraintBottom_toTopOf="@id/hue"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/translate" />
+        app:layout_constraintTop_toBottomOf="@id/luminance_controll" />
 
     <TextView
-        android:id="@+id/rotate"
+        android:id="@+id/hue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickRotate"
-        android:text="Rotate"
+        android:onClick="onClickHue"
+        android:text="Hue(颜色色调控制)"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/skew"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scale" />
+        app:layout_constraintTop_toBottomOf="@id/luminance_controll2" />
 
     <TextView
         android:id="@+id/skew"
@@ -78,13 +78,13 @@
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickSkew"
-        android:text="Skew(错切)"
+        android:onClick="onClickHue2"
+        android:text="Hue(颜色色调控制2)"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/clip"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rotate" />
+        app:layout_constraintTop_toBottomOf="@id/hue" />
     <TextView
         android:id="@+id/clip"
         android:layout_width="wrap_content"
@@ -93,8 +93,8 @@
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickClip"
-        android:text="裁剪(Clip)"
+        android:onClick="onClickSaturation"
+        android:text="Saturation(颜色饱和度)"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/invert"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -108,8 +108,8 @@
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickInvert"
-        android:text="反转(Invert)"
+        android:onClick="onClickLightColorFilter"
+        android:text="LightColorFilter(光线过滤)"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/map"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -124,11 +124,27 @@
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickMap"
-        android:text="Map(点映射)"
+        android:onClick="onClickPorterDuff"
+        android:text="PorterDuff(颜色混合)"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/cfilter_porter_duff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/invert" />
+
+    <TextView
+        android:id="@+id/cfilter_porter_duff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/round_bg_corner_5dp"
+        android:gravity="center"
+        android:minWidth="80dp"
+        android:onClick="onClickPorterDuff2"
+        android:text="PorterDuff(颜色混合2)"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/invert" />
+        app:layout_constraintTop_toBottomOf="@id/map" />
 </androidx.constraintlayout.widget.ConstraintLayout>

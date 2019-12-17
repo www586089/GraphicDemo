@@ -6,6 +6,7 @@ import android.view.View
 import com.zfang.graphicdemo.activity.ColorFilterActivity
 import com.zfang.graphicdemo.activity.MatrixActivity
 import com.zfang.graphicdemo.activity.PathEffectActivity
+import com.zfang.graphicdemo.activity.TestActivity
 import com.zfang.graphicdemo.activity.matrix.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,5 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickMap(view: View) {
         MapActivity.start(this)
+    }
+
+    fun onClickTest(view: View) {
+        TestActivity.start(this)
     }
 }
