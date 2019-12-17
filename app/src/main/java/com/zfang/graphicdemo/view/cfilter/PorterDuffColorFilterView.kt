@@ -2,10 +2,12 @@ package com.zfang.graphicdemo.view.cfilter
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.zfang.graphicdemo.R
 import com.zfang.graphicdemo.common.px2Dp
 
@@ -165,6 +167,33 @@ class PorterDuffColorFilterView(context: Context?, attrs: AttributeSet?) :
         lightColorFilters.add(cFilter17)
 
         return lightColorFilters
+    }
+
+    fun makeSrc() : Bitmap{
+        val radius = bitmapWidth.div(3f)
+        val bitmap = Bitmap.createBitmap(bitmapWidth.toInt(),bitmapWidth.toInt(),Bitmap.Config.ARGB_8888)
+        val c = Canvas(bitmap)
+        val p = Paint().apply {
+            style = Paint.Style.FILL
+            color = ContextCompat.getColor(context, R.color.colorAccent)
+        }
+        c.drawRect(radius,radius,bitmapWidth.times(0.75f),bitmapWidth.times(0.75f),p)
+        return bitmap
+    }
+
+    fun makeDst() : Bitmap{
+        val radius = bitmapWidth.div(3f)
+        val bitmap = Bitmap.createBitmap(radius.times(2).toInt()
+            ,radius.times(2).toInt(),Bitmap.Config.ARGB_8888)
+        val c = Canvas(bitmap)
+        val p = Paint().apply {
+            style = Paint.Style.FILL
+            color = ContextCompat.getColor(context, R.color.colorPrimary)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            c.drawOval(0f,0f,radius.times(2),radius.times(2),p)
+        }
+        return bitmap
     }
 
 }
