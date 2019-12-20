@@ -1,4 +1,4 @@
-package com.zfang.graphicdemo.view.path
+package com.zfang.graphicdemo.view.path.effect
 
 import android.content.Context
 import android.graphics.*
@@ -6,15 +6,10 @@ import android.util.AttributeSet
 import com.zfang.graphicdemo.common.px2Dp
 
 /**
- *
- * 两种效果加起来作用于路径
+ * ComposePathEffect(PathEffect outerpe, PathEffect innerpe)
+ * 先将路径变成innerpe的效果，再去复合outerpe的路径效果即：outerpe(innerpe(path))
  */
-/**
- * SumPathEffect(PathEffect first, PathEffect second)
- * Construct a PathEffect whose effect is to apply two effects, in sequence.
- * (e.g. first(path) + second(path))
- */
-class SumPathEffectView(context: Context?, attrs: AttributeSet?) : BasePathView(context, attrs) {
+class ComposePathEffectView(context: Context?, attrs: AttributeSet?) : BasePathView(context, attrs) {
     //动态改变改值会产生动画效果
     var mPhase = 0f
     var circlePath: Path = Path()
@@ -29,8 +24,8 @@ class SumPathEffectView(context: Context?, attrs: AttributeSet?) : BasePathView(
 //        invalidate()
         var cornerPathEffect = CornerPathEffect(strokeWidth.toFloat())
         var dashPathEffect = DashPathEffect(floatArrayOf(30f, 5f), 0f)
-        var discretePathEffect = DiscretePathEffect(10f, 1f)
+        var discretePathEffect = DiscretePathEffect(1f, 5f)
 
-        return SumPathEffect(pathDashPathEffect, dashPathEffect)
+        return ComposePathEffect(dashPathEffect, cornerPathEffect)
     }
 }

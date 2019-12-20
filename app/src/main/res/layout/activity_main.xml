@@ -33,10 +33,26 @@
         android:onClick="onClickPathEffect"
         android:text="PathEffect"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/cfilter"
+        app:layout_constraintBottom_toTopOf="@id/path_common"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/matrix" />
+
+    <TextView
+        android:id="@+id/path_common"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/round_bg_corner_5dp"
+        android:gravity="center"
+        android:minWidth="80dp"
+        android:onClick="onClickPathCommon"
+        android:text="PathCommon"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/cfilter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/path_effect" />
 
     <TextView
         android:id="@+id/cfilter"
@@ -52,7 +68,7 @@
         app:layout_constraintBottom_toTopOf="@id/rotate"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/path_effect" />
+        app:layout_constraintTop_toBottomOf="@id/path_common" />
 
     <TextView
         android:id="@+id/rotate"

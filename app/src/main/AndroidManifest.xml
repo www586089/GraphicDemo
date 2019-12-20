@@ -37,6 +37,8 @@
         <activity android:name=".activity.cfilter.PorterDuffColorFilterActivity" />
         <activity android:name=".activity.cfilter.PorterDuffColorFilter2Activity" />
         <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.PathCommonActivity" />
+        <activity android:name=".activity.path.LineCapActivity" />
     </application>
 
 </manifest>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.PathCommonActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -14,10 +15,14 @@
             android:layout_height="match_parent"
             tools:context=".activity.PathEffectActivity">
 
-            <com.zfang.graphicdemo.view.path.effect.NoPathEffectView
-                android:id="@+id/no_path_effect"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/line_cap"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onLineCapClick"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:text="Line-Cap"
+                android:gravity="center"
                 app:layout_constraintBottom_toTopOf="@id/corner_path_effect"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -35,7 +40,7 @@
                 app:layout_constraintBottom_toTopOf="@id/discrete_path_effect"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/no_path_effect" />
+                app:layout_constraintTop_toBottomOf="@id/line_cap" />
 
             <com.zfang.graphicdemo.view.path.effect.DiscretePathEffectView
                 android:id="@+id/discrete_path_effect"

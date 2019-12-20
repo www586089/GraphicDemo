@@ -1,7 +1,6 @@
-package com.zfang.graphicdemo.view.path
+package com.zfang.graphicdemo.view.path.effect
 
 import android.content.Context
-import android.graphics.CornerPathEffect
 import android.graphics.DashPathEffect
 import android.graphics.PathEffect
 import android.util.AttributeSet
