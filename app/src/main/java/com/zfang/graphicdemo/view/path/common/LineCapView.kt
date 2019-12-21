@@ -14,7 +14,7 @@ import com.zfang.graphicdemo.common.px2Dp
  */
 class LineCapView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private final val TAG = "LineCapView"
+    private val TAG = "LineCapView"
     private var canvasHeight = 0
     private var canvasWidth = 0
     private var linePaint = Paint()
@@ -24,7 +24,6 @@ class LineCapView(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
     init {
         linePaint.strokeWidth = 16.px2Dp(context!!).toFloat()
-        linePaint.strokeCap = Paint.Cap.BUTT
 
         textPaint.color = Color.RED
         textPaint.textSize = 14.px2Dp(context).toFloat()

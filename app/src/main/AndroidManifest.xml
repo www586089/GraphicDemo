@@ -39,6 +39,7 @@
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.PathCommonActivity" />
         <activity android:name=".activity.path.LineCapActivity" />
+        <activity android:name=".activity.path.LineJoinActivity" />
     </application>
 
 </manifest>
