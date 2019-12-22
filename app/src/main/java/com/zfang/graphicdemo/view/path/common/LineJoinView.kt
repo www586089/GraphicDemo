@@ -97,7 +97,7 @@ class LineJoinView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         canvas.restoreToCount(saveCount)
 
-        //test dash path effect
+        //test dash taijiPath effect
         linePath.reset()
         linePath.moveTo(0f, 200f)
         linePath.lineTo(x2, 200f)

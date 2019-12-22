@@ -2,13 +2,9 @@ package com.zfang.graphicdemo.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.zfang.graphicdemo.R
-import com.zfang.graphicdemo.activity.matrix.*
-import com.zfang.graphicdemo.activity.path.LineCapActivity
-import com.zfang.graphicdemo.activity.path.LineJoinActivity
 import com.zfang.graphicdemo.activity.shader.*
 import com.zfang.graphicdemo.base.BaseActivity
 
@@ -54,6 +50,10 @@ class ShaderEffectActivity : BaseActivity() {
     }
 
     fun onClickShaderScale(view: View) {
-        ShaderScaleActivity.start(this)
+        ShaderScaleRectActivity.start(this)
+    }
+
+    fun onClickShaderScaleCircle(view: View) {
+        ShaderScaleCircleActivity.start(this)
     }
 }

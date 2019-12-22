@@ -7,7 +7,7 @@ import com.zfang.graphicdemo.common.px2Dp
 
 /**
  * ComposePathEffect(PathEffect outerpe, PathEffect innerpe)
- * 先将路径变成innerpe的效果，再去复合outerpe的路径效果即：outerpe(innerpe(path))
+ * 先将路径变成innerpe的效果，再去复合outerpe的路径效果即：outerpe(innerpe(taijiPath))
  */
 class ComposePathEffectView(context: Context?, attrs: AttributeSet?) : BasePathView(context, attrs) {
     //动态改变改值会产生动画效果

@@ -141,7 +141,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sum_path_effect" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -149,7 +149,8 @@
                 android:background="@drawable/round_bg_corner_5dp"
                 android:gravity="center"
                 android:minWidth="80dp"
-                android:text="Map(点映射)"
+                android:onClick="onClickShaderScaleCircle"
+                android:text="ShaderScaleCircle"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

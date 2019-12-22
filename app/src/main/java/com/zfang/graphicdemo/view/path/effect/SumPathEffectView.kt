@@ -12,7 +12,7 @@ import com.zfang.graphicdemo.common.px2Dp
 /**
  * SumPathEffect(PathEffect first, PathEffect second)
  * Construct a PathEffect whose effect is to apply two effects, in sequence.
- * (e.g. first(path) + second(path))
+ * (e.g. first(taijiPath) + second(taijiPath))
  */
 class SumPathEffectView(context: Context?, attrs: AttributeSet?) : BasePathView(context, attrs) {
     //动态改变改值会产生动画效果

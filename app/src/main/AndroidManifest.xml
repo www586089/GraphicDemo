@@ -48,7 +48,8 @@
         <activity android:name=".activity.shader.ComposeShaderActivity" />
         <activity android:name=".activity.shader.ShowComposeShaderActivity" />
         <activity android:name=".activity.shader.ShaderTranslateActivity" />
-        <activity android:name=".activity.shader.ShaderScaleActivity" />
+        <activity android:name=".activity.shader.ShaderScaleRectActivity" />
+        <activity android:name=".activity.shader.ShaderScaleCircleActivity" />
     </application>
 
 </manifest>
