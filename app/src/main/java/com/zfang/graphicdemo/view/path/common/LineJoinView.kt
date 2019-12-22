@@ -27,6 +27,7 @@ class LineJoinView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var textBound = Rect()
     private var pathBound = RectF()
     private var path = Path()
+    private var linePath = Path()
 
     private var pathMatrix = Matrix()
     private var pathEffect: PathEffect = DashPathEffect(floatArrayOf(10f, 5f), 0f)
@@ -96,6 +97,14 @@ class LineJoinView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         canvas.restoreToCount(saveCount)
 
+        //test dash path effect
+        linePath.reset()
+        linePath.moveTo(0f, 200f)
+        linePath.lineTo(x2, 200f)
+
+        canvas.drawPath(linePath, dashLinePaint)
+
+        val gradient: SweepGradient? = null
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

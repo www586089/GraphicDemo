@@ -40,6 +40,11 @@
         <activity android:name=".activity.PathCommonActivity" />
         <activity android:name=".activity.path.LineCapActivity" />
         <activity android:name=".activity.path.LineJoinActivity" />
+        <activity android:name=".activity.shader.LinearGradientShaderActivity" />
+        <activity android:name=".activity.ShaderEffectActivity" />
+        <activity android:name=".activity.shader.SweepGradientShaderActivity" />
+        <activity android:name=".activity.shader.RadialGradientShaderActivity" />
+        <activity android:name=".activity.shader.BitmapShaderActivity" />
     </application>
 
 </manifest>

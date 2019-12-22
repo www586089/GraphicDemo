@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         PathCommonActivity.start(this)
     }
 
+    fun onClickShader(view: View) {
+        ShaderEffectActivity.start(this)
+    }
+
     fun onClickRotate(view: View) {
         RotateActivity.start(this)
     }
