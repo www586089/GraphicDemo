@@ -45,6 +45,10 @@
         <activity android:name=".activity.shader.SweepGradientShaderActivity" />
         <activity android:name=".activity.shader.RadialGradientShaderActivity" />
         <activity android:name=".activity.shader.BitmapShaderActivity" />
+        <activity android:name=".activity.shader.ComposeShaderActivity" />
+        <activity android:name=".activity.shader.ShowComposeShaderActivity" />
+        <activity android:name=".activity.shader.ShaderTranslateActivity" />
+        <activity android:name=".activity.shader.ShaderScaleActivity" />
     </application>
 
 </manifest>

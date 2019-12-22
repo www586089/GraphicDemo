@@ -9,10 +9,7 @@ import com.zfang.graphicdemo.R
 import com.zfang.graphicdemo.activity.matrix.*
 import com.zfang.graphicdemo.activity.path.LineCapActivity
 import com.zfang.graphicdemo.activity.path.LineJoinActivity
-import com.zfang.graphicdemo.activity.shader.BitmapShaderActivity
-import com.zfang.graphicdemo.activity.shader.LinearGradientShaderActivity
-import com.zfang.graphicdemo.activity.shader.RadialGradientShaderActivity
-import com.zfang.graphicdemo.activity.shader.SweepGradientShaderActivity
+import com.zfang.graphicdemo.activity.shader.*
 import com.zfang.graphicdemo.base.BaseActivity
 
 class ShaderEffectActivity : BaseActivity() {
@@ -42,5 +39,21 @@ class ShaderEffectActivity : BaseActivity() {
 
     fun onClickBitmapShader(view: View) {
         BitmapShaderActivity.start(this)
+    }
+
+    fun onClickComposeShader(view: View) {
+        ComposeShaderActivity.start(this)
+    }
+
+    fun onClickShowComposeShader(view: View) {
+        ShowComposeShaderActivity.start(this)
+    }
+
+    fun onClickShaderTranslate(view: View) {
+        ShaderTranslateActivity.start(this)
+    }
+
+    fun onClickShaderScale(view: View) {
+        ShaderScaleActivity.start(this)
     }
 }

@@ -1,10 +1,8 @@
 package com.zfang.graphicdemo.view.shader
 
-import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.view.MotionEvent
 import android.view.View
 import com.zfang.graphicdemo.common.px2Dp
 
