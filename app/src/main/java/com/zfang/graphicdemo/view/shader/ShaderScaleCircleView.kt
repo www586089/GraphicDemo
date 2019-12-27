@@ -32,6 +32,7 @@ class ShaderScaleCircleView(context: Context?, attrs: AttributeSet?) : View(cont
     private var cMatrix = Matrix()
     private var animatedRectF = RectF()
     private var originRect = RectF()
+    private var taijiPathBound = RectF()
 
 
     val paddingH = 12.px2Dp(context!!).toFloat()
@@ -82,7 +83,7 @@ class ShaderScaleCircleView(context: Context?, attrs: AttributeSet?) : View(cont
 
     private fun startAnimation() {
         val animate = ValueAnimator.ofFloat(0f, radius)
-        animate.setDuration(1_500)
+        animate.setDuration(500)
         animate.addUpdateListener {
             val value = it.animatedValue as Float
             val scale = value / radius
@@ -155,12 +156,14 @@ class ShaderScaleCircleView(context: Context?, attrs: AttributeSet?) : View(cont
 //        centerX = (rectF.left + rectF.right) / 2
 //        centerY = (rectF.top + rectF.bottom) / 2
 
-        canvas!!.save()
-        canvas.clipRect(rectF)
-        canvas.drawCircle(centerX, centerY, animatedRadius, rectPaint)
-        canvas.restore()
+        if (rectF.contains(centerX, centerY)) {
+            val saveCount = canvas!!.saveLayer(rectF, rectPaint)
+            canvas.clipRect(rectF)
+            canvas.drawCircle(centerX, centerY, radius/*animatedRadius*/, rectPaint)
+            canvas.restoreToCount(saveCount)
+        }
+        canvas!!.drawRect(rectF, dashPaint)
 
-        canvas.drawRect(rectF, dashPaint)
 
         drawTaiji(canvas)
     }
@@ -218,8 +221,15 @@ class ShaderScaleCircleView(context: Context?, attrs: AttributeSet?) : View(cont
         canvas.save()
         canvas.clipPath(taijiPath)
         canvas.drawPath(taijiPath, pathPaint)
-        canvas.drawCircle(ShaderScaleCircleView@this.centerX, ShaderScaleCircleView@this.centerY, animatedRadius, rectPaint)
+
+        if (taijiPathBound.contains(ShaderScaleCircleView@this.centerX, ShaderScaleCircleView@this.centerY)) {
+            canvas.drawCircle(ShaderScaleCircleView@this.centerX, ShaderScaleCircleView@this.centerY, animatedRadius, rectPaint)
+        }
         canvas.restore()
+
+        taijiPath.computeBounds(taijiPathBound, true)
+        canvas.clipRect(taijiPathBound)
+        canvas.drawRect(taijiPathBound, pathPaint)
     }
 
 
