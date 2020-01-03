@@ -1,4 +1,4 @@
-package com.zfang.graphicdemo
+package com.zfang.graphicdemo.test.glide
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -11,7 +11,7 @@ fun main() {
 
 
 fun testGet() {
-    val url = "http://cf.colorbook.info/m/config?pubid=100194&moduleid=7070&pkg_name=com.colorbook.coloring&pkg_ver=1&file_ver=20171111"
+    val url = "http://cf.colorbook.info/p/config?pubid=100194&moduleid=7070&pkg_name=com.colorbook.coloring&pkg_ver=1&file_ver=20171111"
     val client = OkHttpClient()
     val request = Request.Builder()
         .url(url)
@@ -19,7 +19,7 @@ fun testGet() {
     val call = client.newCall(request)
     try {
         val response = call.execute()
-        System.out.println(response.body()?.string())
+        System.out.println(response.body!!.string())
     } catch (e: IOException) {
         e.printStackTrace()
     }
