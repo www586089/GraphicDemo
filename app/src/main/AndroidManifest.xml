@@ -53,6 +53,7 @@
         <activity android:name=".activity.shader.ShaderTranslateActivity" />
         <activity android:name=".activity.shader.ShaderScaleRectActivity" />
         <activity android:name=".activity.shader.ShaderScaleCircleActivity" />
+        <activity android:name=".activity.view.ViewRotationActivity" />
     </application>
 
 </manifest>
