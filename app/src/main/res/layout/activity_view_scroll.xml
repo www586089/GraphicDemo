@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.view.ViewOpActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".activity.PathEffectActivity">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/view_rotation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:onClick="onClickViewRotation"
+                android:text="view旋转"
+                app:layout_constraintBottom_toTopOf="@id/view_drag_me"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/view_drag_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:onClick="onClickDragMe"
+                android:text="view基础拖动（自己实现）"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/discrete_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_rotation" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/discrete_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:onClick="onClickSweepGradient"
+                android:text="SweepGradient"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/dash_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_drag_me" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dash_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:onClick="onClickBitmapShader"
+                android:text="BitmapShader"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/path_dash_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/discrete_path_effect" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/path_dash_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:onClick="onClickComposeShader"
+                android:text="ComposeShader"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/compose_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dash_path_effect" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/compose_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:minWidth="80dp"
+                android:onClick="onClickShowComposeShader"
+                android:text="ShowComposeShader"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/sum_path_effect"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/path_dash_path_effect" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sum_path_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:onClick="onClickShaderTranslate"
+                android:text="ShaderTranslate"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/invert"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/compose_path_effect" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/invert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:onClick="onClickShaderScale"
+                android:text="ShaderScale"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@id/map"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sum_path_effect" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/round_bg_corner_5dp"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:onClick="onClickShaderScaleCircle"
+                android:text="ShaderScaleCircle"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/invert" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

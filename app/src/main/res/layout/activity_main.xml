@@ -186,10 +186,24 @@
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickViewRotation"
-        android:text="View旋转"
+        android:onClick="onClickViewOp"
+        android:text="View相关操作"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/test" />
+    <TextView
+        android:id="@+id/view_drag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/round_bg_corner_5dp"
+        android:gravity="center"
+        android:minWidth="80dp"
+        android:onClick="onClickDragView"
+        android:text="DragView"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_rotation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

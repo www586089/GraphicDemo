@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GraphicDemo</string>
+    <string name="text_drag1_desc">人生如旅行，我亦是行人。</string>
+    <string name="text_drag2_desc">要么庸俗，要么孤独。</string>
+    <string name="text_drag3_desc">不乱于心，不困于情。不畏将来，不念过往。如此，安好。</string>
 </resources>

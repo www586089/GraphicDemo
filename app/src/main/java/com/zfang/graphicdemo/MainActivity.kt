@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.zfang.graphicdemo.activity.*
 import com.zfang.graphicdemo.activity.matrix.*
-import com.zfang.graphicdemo.activity.view.ViewRotationActivity
+import com.zfang.graphicdemo.activity.view.ViewOpActivity
+import com.zfang.graphicdemo.activity.view.drag.ViewDragActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,7 +59,11 @@ class MainActivity : AppCompatActivity() {
         TestActivity.start(this)
     }
 
-    fun onClickViewRotation(view: View) {
-        ViewRotationActivity.start(this)
+    fun onClickViewOp(view: View) {
+        ViewOpActivity.start(this)
+    }
+
+    fun onClickDragView(view: View) {
+        ViewDragActivity.start(this)
     }
 }
