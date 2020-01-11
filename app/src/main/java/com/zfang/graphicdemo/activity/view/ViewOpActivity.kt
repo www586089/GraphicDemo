@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.zfang.graphicdemo.R
+import com.zfang.graphicdemo.activity.view.drag.DragSwapActivity
 import com.zfang.graphicdemo.activity.view.drag.ViewDragActivity
+import com.zfang.graphicdemo.activity.view.drag.ViewDragActivity2
 import com.zfang.graphicdemo.activity.view.drag.ViewRotationActivity
 import com.zfang.graphicdemo.base.BaseActivity
 
@@ -30,8 +32,12 @@ class ViewOpActivity : BaseActivity() {
     fun onClickDragMe(view: View) {
         ViewDragActivity.start(this)
     }
-    fun onClickSweepGradient(view: View) {}
-    fun onClickBitmapShader(view: View) {}
+    fun onClickViewDragHelper(view: View) {
+        ViewDragActivity2.start(this)
+    }
+    fun onClickDragSwap(view: View) {
+        DragSwapActivity.start(this)
+    }
     fun onClickComposeShader(view: View) {}
     fun onClickShowComposeShader(view: View) {}
     fun onClickShaderTranslate(view: View) {}
