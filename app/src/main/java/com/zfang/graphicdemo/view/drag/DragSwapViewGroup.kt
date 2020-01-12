@@ -14,6 +14,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.animation.AnticipateOvershootInterpolator
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.collection.SparseArrayCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -41,11 +42,18 @@ class DragSwapViewGroup(ctx: Context, attrs: AttributeSet): ConstraintLayout(ctx
     private var viewBounds = Rect()
     private var totalDragOffsetX = 0f
     private var totalDragOffsetY = 0f
+    private var swapViewOffsetX = 0f
+    private var swapViewOffsetY = 0f
     private var dragDrawable: BitmapDrawable? = null
     private var strokeDrawable: Drawable? = null
     private val childCenterArray = SparseArrayCompat<ItemViewObj>()
     private var nearestViewObj: ItemViewObj? = null
+    private var swapViewObj: ItemViewObj? = null
+    private var swapBitmapDrawable: BitmapDrawable? = null
     private var currentCenter = Point()
+
+    private var settleSwapAnimatorSet: AnimatorSet? = null
+    private var settleDragAnimatorSet: AnimatorSet? = null
 
     init {
         val resources = resources
@@ -64,6 +72,7 @@ class DragSwapViewGroup(ctx: Context, attrs: AttributeSet): ConstraintLayout(ctx
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         when (ev!!.action) {
             MotionEvent.ACTION_DOWN -> {
+                endPrevAnimation()
                 downX = ev.x
                 downY = ev.y
                 lastX = downX
@@ -100,6 +109,7 @@ class DragSwapViewGroup(ctx: Context, attrs: AttributeSet): ConstraintLayout(ctx
                     currentCenter.set(centerX, centerY)
                     Log.e("zfang", "centerX = $centerX, centerY = $centerY")
                     nearestViewObj = findNearestView(currentCenter)
+                    swapViewObj = nearestViewObj
                     invalidate()
                 }
             }
@@ -156,6 +166,16 @@ class DragSwapViewGroup(ctx: Context, attrs: AttributeSet): ConstraintLayout(ctx
                 }
             }
         }
+
+        swapBitmapDrawable?.apply {
+            canvas?.apply {
+                //draw swap to dragView
+                canvas.save()
+                canvas.translate(swapViewOffsetX, swapViewOffsetY)
+                swapBitmapDrawable!!.draw(canvas)
+                canvas.restore()
+            }
+        }
     }
 
     private fun gatherViewCenter() {
@@ -190,7 +210,94 @@ class DragSwapViewGroup(ctx: Context, attrs: AttributeSet): ConstraintLayout(ctx
     }
 
     private fun doActionUp() {
-        settleOrigin()
+//        settleOrigin()
+        doSwap()
+        swap2Origin()
+    }
+
+    private fun endPrevAnimation() {
+        settleSwapAnimatorSet?.apply {
+            if (isRunning) {
+                end()
+            }
+        }
+        settleDragAnimatorSet?.apply {
+            if (isRunning) {
+                end()
+            }
+        }
+    }
+
+    //滑动到要交换的view  dragView -> swapView
+    private fun doSwap() {
+        swapViewObj?.apply {
+            val swapView = swapViewObj!!.view
+            val settleSwapX = ValueAnimator.ofFloat(totalDragOffsetX, swapView.left.toFloat() - dragView!!.left)
+            settleSwapX.addUpdateListener(ValueAnimator.AnimatorUpdateListener {
+                totalDragOffsetX = it.getAnimatedValue() as Float
+                invalidate()
+            })
+            val settleSwapY = ValueAnimator.ofFloat(totalDragOffsetY, swapView.top.toFloat() - dragView!!.top)
+            settleSwapY.addUpdateListener {
+                totalDragOffsetY = it.getAnimatedValue() as Float
+                invalidate()
+            }
+
+            settleSwapAnimatorSet = AnimatorSet()
+            settleSwapAnimatorSet?.apply {
+                duration = 500
+                interpolator = AnticipateOvershootInterpolator()
+                play(settleSwapX).with(settleSwapY)
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        swapView.apply {
+                            (swapView as AppCompatImageView).setImageDrawable(dragDrawable)
+                            dragDrawable = null
+                            invalidate()
+                        }
+                    }
+                })
+
+                start()
+            }
+        }
+    }
+
+    //滑动到原始位置swapView -> dragView
+    private fun swap2Origin() {
+        swapViewObj?.apply {
+            val swapView = swapViewObj!!.view
+            swapBitmapDrawable = getDragDrawable(swapView)
+            val settleSwapX = ValueAnimator.ofFloat(0f, dragView!!.left - swapView.left.toFloat())
+            settleSwapX.addUpdateListener(ValueAnimator.AnimatorUpdateListener {
+                swapViewOffsetX = it.getAnimatedValue() as Float
+                invalidate()
+            })
+            val settleSwapY = ValueAnimator.ofFloat(0f, dragView!!.top - swapView.top.toFloat())
+            settleSwapY.addUpdateListener {
+                swapViewOffsetY = it.getAnimatedValue() as Float
+                invalidate()
+            }
+
+            settleDragAnimatorSet = AnimatorSet()
+            settleDragAnimatorSet?.apply {
+                duration = 500
+                interpolator = AnticipateOvershootInterpolator()
+                play(settleSwapX).with(settleSwapY)
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        dragView?.apply {
+                            (dragView as AppCompatImageView).setImageDrawable(swapBitmapDrawable)
+                            swapBitmapDrawable = null
+                            invalidate()
+                            dragView!!.visibility = View.VISIBLE
+                        }
+                    }
+                })
+
+                start()
+            }
+        }
     }
 
     private fun settleOrigin() {
