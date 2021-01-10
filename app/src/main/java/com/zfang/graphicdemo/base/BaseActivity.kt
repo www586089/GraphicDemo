@@ -27,6 +27,7 @@ open class BaseActivity() : AppCompatActivity() {
     }
 
     protected fun initToolbar(displayHomeAsUp: Boolean = true, title: String = getString(R.string.app_name)) {
+        Log.e(TAG, "initToolbar: fix a bug")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setTitle(title)
     }
