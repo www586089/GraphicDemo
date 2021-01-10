@@ -3,6 +3,7 @@ package com.zfang.graphicdemo.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.zfang.graphicdemo.R
 import com.zfang.graphicdemo.activity.cfilter.*
@@ -10,6 +11,8 @@ import com.zfang.graphicdemo.activity.matrix.*
 import com.zfang.graphicdemo.base.BaseActivity
 
 class ColorFilterActivity : BaseActivity() {
+
+    private val TAG = "ColorFilterActivity"
 
     companion object {
         fun start(activity: Activity) {
@@ -19,6 +22,7 @@ class ColorFilterActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_color_filter)
+        Log.d(TAG, "onCreate: ")
         initToolbar(title = "ColorFilter")
     }
 
