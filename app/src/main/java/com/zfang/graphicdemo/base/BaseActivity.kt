@@ -12,6 +12,7 @@ open class BaseActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate: ")//add a log in onCreate
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
