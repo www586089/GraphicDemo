@@ -16,7 +16,6 @@ open class BaseActivity() : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        Log.e(TAG, "onOptionsItemSelected: feature 1.0")
         when (item!!.itemId) {
             android.R.id.home -> finish()
             else -> {
