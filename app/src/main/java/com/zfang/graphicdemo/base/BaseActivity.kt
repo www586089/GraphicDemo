@@ -16,7 +16,7 @@ open class BaseActivity() : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        Log.e(TAG, "onOptionsItemSelected: ")
+        Log.e(TAG, "onOptionsItemSelected: this is good")
         when (item!!.itemId) {
             android.R.id.home -> finish()
             else -> {
@@ -27,6 +27,7 @@ open class BaseActivity() : AppCompatActivity() {
     }
 
     protected fun initToolbar(displayHomeAsUp: Boolean = true, title: String = getString(R.string.app_name)) {
+        Log.e(TAG, "initToolbar: fix a bug")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setTitle(title)
     }
