@@ -23,7 +23,6 @@ open class BaseActivity() : AppCompatActivity() {
                 Log.e(TAG, "nothing todo 22")
             }
         }
-        Log.e(TAG, "onOptionsItemSelected: I'm Coming")
         return super.onOptionsItemSelected(item)
     }
 
