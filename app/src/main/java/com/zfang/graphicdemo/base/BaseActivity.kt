@@ -20,7 +20,7 @@ open class BaseActivity() : AppCompatActivity() {
         when (item!!.itemId) {
             android.R.id.home -> finish()
             else -> {
-                Log.e(TAG, "nothing todo")
+                Log.e(TAG, "nothing todo 2")
             }
         }
         return super.onOptionsItemSelected(item)
