@@ -1,5 +1,10 @@
 package com.zfang.graphicdemo.refact;
 
+import com.zfang.graphicdemo.refact.price.ChildrensPrice;
+import com.zfang.graphicdemo.refact.price.NewReleasePrice;
+import com.zfang.graphicdemo.refact.price.Price;
+import com.zfang.graphicdemo.refact.price.RegularPrice;
+
 public class Movie {
     public static final int REGUALAR = 0;
     public static final int NEW_RELEASE = 1;
@@ -7,6 +12,7 @@ public class Movie {
 
     private String _title;
     private int _priceCode;
+    private Price _price;
 
     public Movie(String _title, int _priceCode) {
         this._title = _title;
@@ -22,7 +28,21 @@ public class Movie {
     }
 
     public void setPriceCode(int _priceCode) {
-        this._priceCode = _priceCode;
+        switch (_priceCode) {
+            case REGUALAR:
+                _price = new RegularPrice();
+                break;
+
+            case NEW_RELEASE:
+                _price = new ChildrensPrice();
+                break;
+
+            case CHILDRENS:
+                _price = new NewReleasePrice();
+                break;
+            default:
+                throw new IllegalArgumentException("Incorrect Price Code");
+        }
     }
 
     /**
