@@ -27,27 +27,7 @@ public class Customer {
         for (int i = 0; i < size; i++) {
             double thisAmount = 0;
             Rental each = _rentals.get(i);
-
-            //determine amounts for each line
-            switch (each.getMovie().getPriceCode()) {
-                case Movie.REGUALAR:
-                    thisAmount += 2;
-                    if (each.getDaysRented() > 2) {
-                        thisAmount += (each.getDaysRented() - 2) * 1.5;
-                    }
-                    break;
-
-                case Movie.NEW_RELEASE:
-                    thisAmount += each.getDaysRented() * 3;
-                    break;
-
-                case Movie.CHILDRENS:
-                    thisAmount += 1.5;
-                    if (each.getDaysRented() > 3) {
-                        thisAmount += (each.getDaysRented() - 3) * 1.5;
-                    }
-                    break;
-            }
+            thisAmount = amountFor(each);
 
             // add frequent renter points
             frequentRenterPoints++;
@@ -67,5 +47,35 @@ public class Customer {
         result.append("Your earned ").append(frequentRenterPoints).append("frequent renter points");
 
         return result.toString();
+    }
+
+    /**
+     * 重构就是小步修改程序，如果犯错很容易发现他。
+     * @param each
+     * @return
+     */
+    private double amountFor(Rental each) {
+        double thisAmount = 0;
+        //determine amounts for each line
+        switch (each.getMovie().getPriceCode()) {
+            case Movie.REGUALAR:
+                thisAmount += 2;
+                if (each.getDaysRented() > 2) {
+                    thisAmount += (each.getDaysRented() - 2) * 1.5;
+                }
+                break;
+
+            case Movie.NEW_RELEASE:
+                thisAmount += each.getDaysRented() * 3;
+                break;
+
+            case Movie.CHILDRENS:
+                thisAmount += 1.5;
+                if (each.getDaysRented() > 3) {
+                    thisAmount += (each.getDaysRented() - 3) * 1.5;
+                }
+                break;
+        }
+        return thisAmount;
     }
 }
