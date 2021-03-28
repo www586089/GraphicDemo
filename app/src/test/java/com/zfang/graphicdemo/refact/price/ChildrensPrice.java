@@ -5,7 +5,7 @@ import com.zfang.graphicdemo.refact.Movie;
 public class ChildrensPrice extends Price {
 
     @Override
-    int getPriceCode() {
+    public int getPriceCode() {
         return Movie.CHILDRENS;
     }
 }
