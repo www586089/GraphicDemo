@@ -51,28 +51,28 @@ public class Customer {
 
     /**
      * 重构就是小步修改程序，如果犯错很容易发现他。
-     * @param each
+     * @param rental
      * @return
      */
-    private double amountFor(Rental each) {
+    private double amountFor(Rental rental) {
         double thisAmount = 0;
         //determine amounts for each line
-        switch (each.getMovie().getPriceCode()) {
+        switch (rental.getMovie().getPriceCode()) {
             case Movie.REGUALAR:
                 thisAmount += 2;
-                if (each.getDaysRented() > 2) {
-                    thisAmount += (each.getDaysRented() - 2) * 1.5;
+                if (rental.getDaysRented() > 2) {
+                    thisAmount += (rental.getDaysRented() - 2) * 1.5;
                 }
                 break;
 
             case Movie.NEW_RELEASE:
-                thisAmount += each.getDaysRented() * 3;
+                thisAmount += rental.getDaysRented() * 3;
                 break;
 
             case Movie.CHILDRENS:
                 thisAmount += 1.5;
-                if (each.getDaysRented() > 3) {
-                    thisAmount += (each.getDaysRented() - 3) * 1.5;
+                if (rental.getDaysRented() > 3) {
+                    thisAmount += (rental.getDaysRented() - 3) * 1.5;
                 }
                 break;
         }
