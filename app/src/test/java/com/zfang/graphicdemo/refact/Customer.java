@@ -24,10 +24,13 @@ public class Customer {
         int frequentRenterPoints = 0;
         StringBuilder result = new StringBuilder("Rental Record for " + getName() + "\n");
         int size = _rentals.size();
+        /**
+         * 临时变量容易引发问题
+         * 1 大量参数传递
+         * 2 混淆或者跟丢他们
+         */
         for (int i = 0; i < size; i++) {
-            double thisAmount = 0;
             Rental each = _rentals.get(i);
-            thisAmount = each.getCharge();
 
             // add frequent renter points
             frequentRenterPoints++;
@@ -37,9 +40,9 @@ public class Customer {
             }
 
             // show figures for this rental
-            result.append("\t").append(each.getMovie().getTitle()).append("\t").append(thisAmount).append("\n");
+            result.append("\t").append(each.getMovie().getTitle()).append("\t").append(each.getCharge()).append("\n");
 
-            totalAmount += thisAmount;
+            totalAmount += each.getCharge();
         }
 
         // add footer lines
