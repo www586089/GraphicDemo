@@ -49,18 +49,6 @@ public class Movie {
      * @return
      */
     public double getCharge(int daysRented) {
-        return _price.getCharge(daysRented);
-    }
-
-    public int getFrequentRenterPoints(int daysRented) {
-        return _price.getFrequentRenterPoints(daysRented);
-    }
-
-    /**
-     * 重构就是小步修改程序，如果犯错很容易发现他。
-     * @return
-     */
-    public double getCharge(int daysRented) {
         double thisAmount = 0;
         //determine amounts for each line
         switch (getPriceCode()) {
