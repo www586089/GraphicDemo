@@ -27,7 +27,7 @@ public class Customer {
         for (int i = 0; i < size; i++) {
             double thisAmount = 0;
             Rental each = _rentals.get(i);
-            thisAmount = amountFor(each);
+            thisAmount = each.getCharge();
 
             // add frequent renter points
             frequentRenterPoints++;
