@@ -59,6 +59,8 @@
         <activity android:name=".activity.view.drag.ViewDragActivity2" />
         <activity android:name=".activity.view.drag.DragSwapActivity" />
         <activity android:name=".activity.test.ScrollTestActivity" />
+        <activity android:name=".activity.SurfaceViewActivity"/>
+        <activity android:name=".activity.surfaceview.RedPackRainActivity"/>
     </application>
 
 </manifest>

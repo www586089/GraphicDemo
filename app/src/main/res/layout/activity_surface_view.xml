@@ -4,87 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.SurfaceViewActivity">
 
     <TextView
-        android:id="@+id/matrix"
+        android:id="@+id/basic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickMatrix"
-        android:text="Matrix"
+        android:onClick="onClickBasicUse"
+        android:text="BasicUse"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/path_effect"
+        app:layout_constraintBottom_toTopOf="@id/red_rain"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/path_effect"
+        android:id="@+id/red_rain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickPathEffect"
-        android:text="PathEffect"
+        android:onClick="onClickRedRain"
+        android:text="红包雨"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/path_common"
+        app:layout_constraintBottom_toTopOf="@id/scale"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/matrix" />
+        app:layout_constraintTop_toBottomOf="@id/basic" />
 
     <TextView
-        android:id="@+id/path_common"
+        android:id="@+id/scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/round_bg_corner_5dp"
         android:gravity="center"
         android:minWidth="80dp"
-        android:onClick="onClickPathCommon"
-        android:text="PathCommon"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/shader"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/path_effect" />
-
-    <TextView
-        android:id="@+id/shader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/round_bg_corner_5dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:onClick="onClickShader"
-        android:text="Shader"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/cfilter"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/path_common" />
-
-    <TextView
-        android:id="@+id/cfilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/round_bg_corner_5dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:onClick="onClickColorFilter"
-        android:text="ColorFilter"
+        android:onClick="onClickScale"
+        android:text="Scale"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/rotate"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shader" />
+        app:layout_constraintTop_toBottomOf="@id/red_rain" />
 
     <TextView
         android:id="@+id/rotate"
@@ -100,7 +68,7 @@
         app:layout_constraintBottom_toTopOf="@id/skew"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cfilter" />
+        app:layout_constraintTop_toBottomOf="@id/scale" />
 
     <TextView
         android:id="@+id/skew"
@@ -159,65 +127,8 @@
         android:onClick="onClickMap"
         android:text="Map(点映射)"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/surface_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/invert" />
-    <TextView
-        android:id="@+id/surface_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/round_bg_corner_5dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:onClick="onClickSurface"
-        android:text="SurfaceView应用"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/map" />
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/round_bg_corner_5dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:onClick="onClickTest"
-        android:text="Test"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/view_rotation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/round_bg_corner_5dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:onClick="onClickViewOp"
-        android:text="View相关操作"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/test" />
-    <TextView
-        android:id="@+id/view_drag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/round_bg_corner_5dp"
-        android:gravity="center"
-        android:minWidth="80dp"
-        android:onClick="onClickDragView"
-        android:text="DragView"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_rotation" />
 </androidx.constraintlayout.widget.ConstraintLayout>
