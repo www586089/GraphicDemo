@@ -95,7 +95,20 @@ private fun startTimer() {
         println(String.format("%02d:%02d:%02d", hour, minute, second))
     }
 }
+
+private fun getShowPhoneNum(phoneNum: String): String {
+    return try {
+        if (phoneNum.startsWith("86")) {
+            "${phoneNum.substring(2, 5)}****${phoneNum.substring(9, phoneNum.length)}"
+        } else {
+            "${phoneNum.substring(0, 3)}****${phoneNum.substring(7, phoneNum.length)}"
+        }
+    } catch (e: Exception) {
+        phoneNum
+    }
+}
 fun main() = runBlocking<Unit> {
+    println("phone = ${getShowPhoneNum("13059541309")}")
     startTimer()
     delay(2)
     startTimer()

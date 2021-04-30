@@ -3,4 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="progress_start_color">#BA90FF</color>
+    <color name="progress_center_color">#FF86E3</color>
+    <color name="progress_end_color">#FF3333</color>
+
+    <color name="point_start_color">#FF69A5</color>
+    <color name="point_end_color">#FF3435</color>
 </resources>
