@@ -24,16 +24,13 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
     private var pointShader: Shader? = null
     private var pointMatrix: Matrix? = null
     private var bgShader: Shader? = null
+    private var scaleRatio = 2f
 
     init {
         bgPaint.color = Color.BLUE
-//        bgPaint.style = Paint.Style.STROKE
         bgPaint.strokeWidth = 1.px2Dp(ctx).toFloat()
 
-//        fgPaint.color = Color.RED
-//        fgPaint.style = Paint.Style.STROKE
         fgPaint.isAntiAlias = true
-//        fgPaint.strokeJoin = Paint.Join.ROUND
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -41,7 +38,6 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
         canvas?.let {
             it.drawColor(Color.parseColor("#67c8ff"))
             it.drawRoundRect(rectF, littleCircleRadius, littleCircleRadius, bgPaint)
-//            it.drawArc(outCircleRectF, -135f, 270f, false, fgPaint)
             it.drawPath(path, fgPaint)
         }
     }
@@ -58,15 +54,14 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
         progressAnimator.addUpdateListener { animator ->
             var centerX = animator.animatedFraction * canvasWidth
             val centerY = canvasHeight / 2
-            if (centerX < outCircleRadius) {
-                centerX = outCircleRadius
+            if (centerX < outCircleRadius * scaleRatio) {
+                centerX = outCircleRadius * scaleRatio
             }
             if (centerX + outCircleRadius > canvasWidth) {
                 centerX = canvasWidth - outCircleRadius
             }
-            Log.e("zfang", "centerX = $centerX")
             rectF.set(0f, centerY - littleCircleRadius, centerX, centerY + littleCircleRadius)
-            buildPath(centerX, centerY, 0f, 2f)
+            buildPathCubic(centerX, centerY, 0f, 2f)
             postInvalidate()
         }
         progressAnimator.start()
@@ -79,18 +74,13 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
 
         if (canvasHeight > 0) {
             outCircleRadius = canvasHeight / 4
-//            outCircleRadius = 15.px2Dp(ctx).toFloat()
             littleCircleRadius = 0.6f * outCircleRadius
-
-            val scaleRatio = 1.5f
             val centerY = canvasHeight / 2
             val centerX = 0.45f * canvasWidth
-//            val centerX = outCircleRadius
-
 
             rectF.set(0f, centerY - littleCircleRadius, centerX, centerY + littleCircleRadius)
             outCircleRectF.set(centerX - outCircleRadius, centerY - outCircleRadius, centerX + outCircleRadius, centerY + outCircleRadius)
-            buildPath(centerX, centerY, 10f, scaleRatio)
+            buildPathCubic(centerX, centerY, 10f, scaleRatio)
 
             if (null == bgShader) {
                 val colors = IntArray(3)
@@ -123,7 +113,10 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
     }
 
 
-    private fun buildPath(centerX: Float, centerY: Float, angle: Float, scaleRatio: Float) {
+    /**
+     *
+     */
+    private fun buildPathQuad(centerX: Float, centerY: Float, angle: Float, scaleRatio: Float) {
         path.rewind()
         outCircleRectF.set(centerX - outCircleRadius, centerY - outCircleRadius, centerX + outCircleRadius, centerY + outCircleRadius)
         val startX = centerX - scaleRatio * outCircleRadius
@@ -137,6 +130,29 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
         path.quadTo(x1, y1, x2, y2)
         path.addArc(outCircleRectF, -(angle + 90), 180f + 2 * angle)
         path.quadTo(x1, centerY + littleCircleRadius, centerX - scaleRatio * outCircleRadius, centerY + littleCircleRadius)
+        path.lineTo(startX, startY)
+    }
+
+    private fun buildPathCubic(centerX: Float, centerY: Float, angle: Float, scaleRatio: Float) {
+        path.rewind()
+        outCircleRectF.set(centerX - outCircleRadius, centerY - outCircleRadius, centerX + outCircleRadius, centerY + outCircleRadius)
+        var startX = centerX - scaleRatio * outCircleRadius
+        if (startX < littleCircleRadius) {
+            startX = littleCircleRadius
+        }
+        val startY = centerY - littleCircleRadius
+        path.moveTo(startX, startY)
+        val x1 = centerX - Math.sqrt(Math.pow(outCircleRadius.toDouble(), 2.0) - Math.pow(littleCircleRadius.toDouble(), 2.0)).toFloat()
+        val y1 = centerY - littleCircleRadius
+        val pi45 = (angle / 180.0) * Math.PI
+
+        val x3 = centerX - (Math.sin(pi45) * outCircleRadius).toFloat()
+        val y3 = centerY - (Math.cos(pi45) * outCircleRadius).toFloat()
+        val x2 = (x1 + x3) / 2
+        val y2 = y3
+        path.cubicTo(x1, y1, x2, y2, x3, y3)
+        path.addArc(outCircleRectF, -(angle + 90), 180f + 2 * angle)
+        path.cubicTo(x2, centerY + outCircleRadius, x1, centerY + littleCircleRadius, startX, centerY + littleCircleRadius)
         path.lineTo(startX, startY)
     }
 }
