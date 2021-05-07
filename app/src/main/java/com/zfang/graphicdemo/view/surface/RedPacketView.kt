@@ -6,10 +6,9 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.*
 import com.zfang.graphicdemo.R
-import com.zfang.graphicdemo.activity.surfaceview.packet.PacketItem
 import com.zfang.graphicdemo.activity.surfaceview.packet.PacketManager
+import com.zfang.graphicdemo.activity.surfaceview.packet.TYPE_PACKET
 import com.zfang.graphicdemo.common.px2Dp
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,20 +19,27 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
     private var mSurfaceHolder: SurfaceHolder = holder
     private var mCanvas: Canvas? = null
     private var drawing = false
+    private var haveStarted = false
+    private var holderAvailable = false
     private var paint = Paint()
     private var testPaint = Paint()
     private var packetBitmap: Bitmap? = null
     private var packetMatrix = Matrix()
+    private var matrixClick = Matrix()
     private var canvasWidth = 0
     private var canvasHeight = 0
     private var packetBitmapWidth = 0
     private var packetBitmapHeight = 0
+    private var clickRectF = RectF()
     private var gestureDetector: GestureDetector
+    private var path = Path()
     private val gestureListener = object : GestureDetector.OnGestureListener {
         override fun onDown(event: MotionEvent?): Boolean {
             Log.d(TAG, "onDown")
 
-            return true
+            val result = judgeClick(event)
+            Log.d(TAG, "result = $result")
+            return result
         }
 
         override fun onShowPress(event: MotionEvent?) {
@@ -67,6 +73,43 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
         initBitmap()
     }
 
+    private fun judgeClick(event: MotionEvent?): Boolean {
+        if (null == event) {
+            return false
+        }
+
+        val runningList = PacketManager.runningRainList
+        val scale = 1.0f
+        var left = 0f
+        var top = 0f
+        var right = 0f
+        var bottom = 0f
+
+        Log.e(TAG, "x = ${event.x}, y = ${event.y}")
+        for (packetItem in runningList) {
+            if (TYPE_PACKET != packetItem.rainType) {
+                continue
+            }
+            matrixClick.reset()
+            matrixClick.setScale(scale, scale)
+            matrixClick.postTranslate(packetItem.currentX - scale * packetItem.bitmapWidth / 2, packetItem.currentY - scale * packetItem.bitmapHeight / 2)
+            matrixClick.postRotate(90 - packetItem.angle, packetItem.currentX, packetItem.currentY)
+
+            left = packetItem.currentX - scale * packetItem.bitmapWidth / 2
+            top = packetItem.currentY - scale * packetItem.bitmapHeight / 2
+            right = packetItem.currentX + scale * packetItem.bitmapWidth / 2
+            bottom = packetItem.currentY + scale * packetItem.bitmapHeight / 2
+            clickRectF.set(left, top, right, bottom)
+
+//            matrixClick.mapRect(clickRectF)
+            if (clickRectF.contains(event.x, event.y)) {
+                return true
+            }
+        }
+
+        return false
+    }
+
     private fun initView() {
         paint.color = Color.RED
         paint.strokeWidth = 2.px2Dp(ctx).toFloat()
@@ -75,6 +118,7 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
         testPaint.color = Color.BLUE
         testPaint.strokeWidth = 2.px2Dp(ctx).toFloat()
         testPaint.isAntiAlias = true
+        testPaint.style = Paint.Style.STROKE
 
         mSurfaceHolder.setFormat(PixelFormat.TRANSPARENT)
         setZOrderOnTop(true)
@@ -95,23 +139,37 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
     }
 
     private fun initBitmap() {
-        packetBitmap = BitmapFactory.decodeResource(ctx.resources, R.drawable.red_packet)
+        packetBitmap = BitmapFactory.decodeResource(ctx.resources, R.drawable.red_packet_01)
         packetBitmap?.let {
             Log.d(TAG, "bitmap, width = ${it.width}, height = ${it.height}")
             packetBitmapWidth = it.width
             packetBitmapHeight = it.height
-            matrix.setScale(0.2f, 0.2f)
+            val scale = 1f
+            matrix.setScale(scale, scale)
         }
     }
 
 
-    private fun startRain() {
-        //            Thread(WorkTask()).start()
+    fun startDrawing() {
+        drawing = true
+        if (!haveStarted) {
+            startRain()
+        }
+    }
+
+    fun stopDrawing() {
+        drawing = false
+    }
+    fun startRain() {
+        //Thread(WorkTask()).start()
         GlobalScope.launch { doRain() }
     }
 
     private fun doRain() {
-        while (drawing) {
+        if (drawing && holderAvailable) {
+            haveStarted = true
+        }
+        while (drawing && holderAvailable) {
             try {
                 mCanvas = mSurfaceHolder.lockCanvas()
                 mCanvas?.run {
@@ -125,30 +183,44 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
                 mCanvas?.let { mSurfaceHolder.unlockCanvasAndPost(it) }
             }
         }
+        haveStarted = false
     }
 
     private fun drawTest(canvas: Canvas) {
-        canvas.drawCircle((canvasWidth / 2).toFloat(), (canvasHeight / 2).toFloat(), 20.px2Dp(ctx).toFloat(), testPaint)
+//        canvas.drawCircle((canvasWidth / 2).toFloat(), (canvasHeight / 2).toFloat(), 20.px2Dp(ctx).toFloat(), testPaint)
         canvas.drawLine(0f, (canvasHeight / 2).toFloat(), canvasWidth.toFloat(), (canvasHeight / 2).toFloat(), testPaint)
         canvas.drawLine((canvasWidth / 2).toFloat(), 0f, (canvasWidth / 2).toFloat(), canvasHeight.toFloat(), testPaint)
-//        PacketManager.startRegion?.let { canvas.drawRect(it, testPaint) }
-//        PacketManager.endRegion?.let { canvas.drawRect(it, testPaint) }
+        PacketManager.appearRegion?.let { canvas.drawRect(it, testPaint) }
+        PacketManager.endRegion?.let { canvas.drawRect(it, testPaint) }
+        val width = 20.px2Dp(ctx)
+        val height = 40.px2Dp(ctx)
+        val centX = (canvasWidth / 2).toFloat()
+        val centY = (canvasHeight / 2).toFloat()
+        clickRectF.set(centX - width / 2, centY - height / 2, centX + width / 2, centY + height / 2)
+//        canvas.drawRect(clickRectF, testPaint)
+
+        canvas.save()
+        canvas.rotate(45f)
+        canvas.drawRect(clickRectF, testPaint)
+        canvas.restore()
     }
 
 
     private fun drawSimplePacket(canvas: Canvas) {
-        packetBitmap?.run {
-
-            val packets = PacketManager.packetList
-            val scale = 0.2f
-            for (packetItem in packets) {
-                packetMatrix.reset()
-                packetMatrix.setScale(scale, scale)
-                packetMatrix.postTranslate(packetItem.currentX - scale * packetBitmapWidth / 2, packetItem.currentY - scale * packetBitmapHeight / 2)
-                packetMatrix.postRotate(packetItem.degree, packetItem.currentX, packetItem.currentY)
-                canvas.drawBitmap(this, packetMatrix, paint)
-                canvas.drawCircle(packetItem.currentX, packetItem.currentY, 20f, paint)
+        val packets = PacketManager.runningRainList
+        val scale = 1f
+        for (packetItem in packets) {
+            if (packetItem.currentX <= -packetItem.outOffsetX) {
+                continue
             }
+            packetMatrix.reset()
+            packetMatrix.setScale(scale, scale)
+//            Log.e(TAG, "zfang, currentX = ${packetItem.currentX}, currentY = ${packetItem.currentY}")
+            packetMatrix.postTranslate(packetItem.currentX - scale * packetItem.bitmapWidth / 2, packetItem.currentY - scale * packetItem.bitmapHeight / 2)
+            packetMatrix.postRotate(90 - packetItem.angle, packetItem.currentX, packetItem.currentY)
+            paint.alpha = (packetItem.currentAlpha * 0xff).toInt()
+            canvas.drawBitmap(packetItem.bitmap, packetMatrix, paint)
+//                canvas.drawCircle(packetItem.currentX, packetItem.currentY, 20f, paint)
         }
     }
 
@@ -169,7 +241,8 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
 
     inner class SurfaceHolderCB: SurfaceHolder.Callback {
         override fun surfaceCreated(holder: SurfaceHolder?) {
-            drawing = true
+            holderAvailable = true
+
             Log.d(TAG, "surfaceCreated")
             startRain()
         }
@@ -184,7 +257,7 @@ class RedPacketView(val ctx: Context, attributeSet: AttributeSet): SurfaceView(c
         }
 
         override fun surfaceDestroyed(holder: SurfaceHolder?) {
-            drawing = false
+            holderAvailable = false
             Log.d(TAG, "surfaceDestroyed")
         }
     }

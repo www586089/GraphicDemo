@@ -6,6 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import com.zfang.graphicdemo.common.px2Dp
 
@@ -50,7 +51,7 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
     private fun startAnimation() {
         val progressAnimator = ValueAnimator.ofFloat(0f, 1f)
         progressAnimator.duration = 8000
-        progressAnimator.interpolator = LinearInterpolator()
+        progressAnimator.interpolator = AccelerateDecelerateInterpolator()
         progressAnimator.addUpdateListener { animator ->
             var centerX = animator.animatedFraction * canvasWidth
             val centerY = canvasHeight / 2

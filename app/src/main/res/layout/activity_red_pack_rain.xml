@@ -6,29 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.surfaceview.RedPackRainActivity">
 
-    <com.zfang.graphicdemo.view.surface.RedPacketProgressView2
-        android:id="@+id/redPacketProgress"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
-    <com.zfang.graphicdemo.view.surface.FlickTextView
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center_vertical"
-        android:text="这是一次测试，来来来"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/redPacketProgress" />
-
     <com.zfang.graphicdemo.view.surface.RedPacketView
         android:id="@+id/packetView"
         android:layout_width="0dp"
@@ -39,12 +16,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.zfang.graphicdemo.view.surface.RedPacketProgressView
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/redPacketProgress"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
