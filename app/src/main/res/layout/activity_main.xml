@@ -174,10 +174,25 @@
         android:onClick="onClickSurface"
         android:text="SurfaceView应用"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bitmap"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/map" />
+    <TextView
+        android:id="@+id/bitmap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/round_bg_corner_5dp"
+        android:gravity="center"
+        android:minWidth="80dp"
+        android:onClick="onClickBitmap"
+        android:text="Bitmap操作"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/surface_view" />
     <TextView
         android:id="@+id/test"
         android:layout_width="wrap_content"

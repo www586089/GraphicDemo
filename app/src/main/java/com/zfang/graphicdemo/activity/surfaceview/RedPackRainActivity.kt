@@ -45,7 +45,7 @@ class RedPackRainActivity: BaseActivity() {
         val bottomDisappearHeight = 80.px2Dp(this)
         val viewHeight = packetView.height.toFloat()
         val endRegion = RectF(0f + offset, viewHeight - (bottomViewHeight + bottomDisappearHeight), width - offset, viewHeight - bottomViewHeight)
-        PacketManager.generateAnimationItem(this, "12", startRegion, endRegion, packetCount = 10, 75f)
+        PacketManager.generateAnimationItem(this, "12", startRegion, endRegion, packetCount = 32, 75f)
         PacketManager.startRainAnimation(object : PacketManager.RainAnimationEnd {
             override fun onEnd() {
                 packetView.stopDrawing()

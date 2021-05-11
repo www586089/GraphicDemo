@@ -98,11 +98,11 @@ object PacketManager {
         generatePacket(rainId, appearRegion, endRegion, packetCount, angle)     //红包
         generateRainPoint(rainId, appearRegion, endRegion, packetCount / 3, angle)  //流星
         generateStar(rainId, appearRegion, endRegion, packetCount / 2, angle)       //星星
-        if (packetCount < 10) {
-            runningRainList.addAll(packetList)
-        } else {
+//        if (packetCount < 10) {
+//            runningRainList.addAll(packetList)
+//        } else {
             scheduleItemAnimation(packetCount, 3, 2)
-        }
+//        }
     }
 
     private fun scheduleItemAnimation(packetCount: Int, liuXingRatio: Int, starRatio: Int) {
@@ -124,7 +124,7 @@ object PacketManager {
                     if (!packetList.isEmpty()) {
                         runningRainList.add(packetList.removeFirst())
                     }
-                    handler?.post { startPropertyAnimation2() }
+//                    handler?.post { startPropertyAnimation() }
                 }, { throwable ->
                     Log.e(TAG, "throwable = ${throwable.message}")
                 })
@@ -324,7 +324,7 @@ object PacketManager {
             val endY = endRegion.bottom
 
             Log.d(TAG, "x = $appearStartX, y = $appearStartY, degree = $angle")
-            liuXingList.add(PacketItem(rainId, 1200 * scale(), appearStartX, appearStartY, endX, endY, angle, TYPE_RIAN).apply {
+            liuXingList.add(PacketItem(rainId, 500 * scale(), appearStartX, appearStartY, endX, endY, angle, TYPE_RIAN).apply {
                 pointsArray[0][0] = appearStartX
                 pointsArray[0][1] = appearStartY
 
@@ -339,8 +339,8 @@ object PacketManager {
 
                 currentX = this.startX
                 currentY = this.startY
-                alphaAppearDuration = 480L * scale()
-                alphaDisappearDuration = 1120L * scale()
+                alphaAppearDuration = 300L * scale()
+                alphaDisappearDuration = 300L * scale()
 
                 bitmap = liuxingBitmap!!
                 bitmapWidth = liuxingBitmapWidth
@@ -370,7 +370,7 @@ object PacketManager {
             val endY = endRegion.bottom
 
             Log.d(TAG, "x = $appearStartX, y = $appearStartY, degree = $angle")
-            starList.add(PacketItem(rainId, 1600 * scale(), appearStartX, appearStartY, endX, endY, angle, TYPE_STAR).apply {
+            starList.add(PacketItem(rainId, 500 * scale(), appearStartX, appearStartY, endX, endY, angle, TYPE_STAR).apply {
                 pointsArray[0][0] = appearStartX
                 pointsArray[0][1] = appearStartY
 
@@ -385,8 +385,8 @@ object PacketManager {
 
                 currentX = this.startX
                 currentY = this.startY
-                alphaAppearDuration = 480L * scale()
-                alphaDisappearDuration = 1280L * scale()
+                alphaAppearDuration = 300L * scale()
+                alphaDisappearDuration = 300L * scale()
 
                 bitmap = starBitmap!!
                 bitmapWidth = starBitmapWidth
@@ -415,7 +415,7 @@ object PacketManager {
             val endY = endRegion.bottom
 
             Log.d(TAG, "x = $appearStartX, y = $appearStartY, degree = $angle")
-            packetList.add(PacketItem(rainId, 1400 * scale(), appearStartX, appearStartY, endX, endY, angle, TYPE_PACKET).apply {
+            packetList.add(PacketItem(rainId, 1600 * scale(), appearStartX, appearStartY, endX, endY, angle, TYPE_PACKET).apply {
                 pointsArray[0][0] = appearStartX
                 pointsArray[0][1] = appearStartY
 
@@ -430,8 +430,8 @@ object PacketManager {
 
                 currentX = this.startX
                 currentY = this.startY
-                alphaAppearDuration = 600L * scale()
-                alphaDisappearDuration = 600L * scale()
+                alphaAppearDuration = 300L * scale()
+                alphaDisappearDuration = 300L * scale()
                 outOffsetX = packetOutOffsetX
 
                 bitmap = packetBitmap!!
@@ -453,7 +453,7 @@ object PacketManager {
 //            calculate()
 //        }
 //        packetItemAnimator.start()
-//        handler.postDelayed({
+//        handler?.postDelayed({
 //            if (packetItemAnimator.isRunning) {
 //                packetItemAnimator.end()
 //            }
@@ -510,23 +510,23 @@ object PacketManager {
             }
         }
 
-//        handler?.post {
-//            aggresstionAnimation = ValueAnimator.ofFloat(0f, 1f)
-//            aggresstionAnimation?.apply {
-//                duration = 2000
-//                repeatMode = ValueAnimator.RESTART
-//                repeatCount = ValueAnimator.INFINITE
-//                interpolator = LinearInterpolator()
-//                addUpdateListener { animation ->
-//                    Log.e("zfang", "update, fraction = ${animation.animatedFraction}")
-//                    calculateAggressions()
-//                }
-//                start()
-//                handler!!.postDelayed({
-//                    endAnimation(rainAnimationEnd)
-//                }, 8000)
-//            }
-//        }
+        handler?.post {
+            aggresstionAnimation = ValueAnimator.ofFloat(0f, 1f)
+            aggresstionAnimation?.apply {
+                duration = 2000
+                repeatMode = ValueAnimator.RESTART
+                repeatCount = ValueAnimator.INFINITE
+                interpolator = LinearInterpolator()
+                addUpdateListener { animation ->
+                    Log.e("zfang", "update, fraction = ${animation.animatedFraction}")
+                    calculateAggressions()
+                }
+                start()
+                handler!!.postDelayed({
+                    endAnimation(rainAnimationEnd)
+                }, 8000)
+            }
+        }
     }
 
     private fun endAnimation(rainAnimationEnd: RainAnimationEnd) {

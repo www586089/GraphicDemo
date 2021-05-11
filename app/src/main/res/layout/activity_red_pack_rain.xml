@@ -18,7 +18,7 @@
     <com.zfang.graphicdemo.view.surface.RedPacketProgressView
         android:id="@+id/redPacketProgress"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="120dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
@@ -38,4 +38,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.zfang.graphicdemo.view.other.PacketView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

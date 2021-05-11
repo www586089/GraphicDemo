@@ -12,6 +12,7 @@ import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlin.Comparator
+import kotlin.collections.ArrayDeque
 import kotlin.concurrent.scheduleAtFixedRate
 import kotlin.math.max
 
@@ -35,6 +36,8 @@ class Activity {
         }
     }
 }
+
+private val msgDeque = ArrayDeque<ToastItemMsg>()
 
 fun getToken(): Observable<String?>? {
     println("zfang")
@@ -108,10 +111,10 @@ private fun getShowPhoneNum(phoneNum: String): String {
     }
 }
 fun main() = runBlocking<Unit> {
-    println("phone = ${getShowPhoneNum("13059541309")}")
-    startTimer()
-    delay(2)
-    startTimer()
+//    println("phone = ${getShowPhoneNum("13059541309")}")
+//    startTimer()
+//    delay(2)
+//    startTimer()
 //    stackTest()
 //    queueTest()
 //    RxJavaHooks.setOnError {
@@ -123,6 +126,10 @@ fun main() = runBlocking<Unit> {
 //        println("on errr = ${it}")
 //    })
 //    println("result = ${Test.result?.a ?: "dddd"}")
+
+    fillArray()
+
+    testArrayDequeue()
 }
 
 fun showNext() {
@@ -221,3 +228,33 @@ class WatchMan {
 interface GetTokenCallback {
     fun onResult(code: Int, str: String, str2: String)
 }
+
+private fun fillArray() {
+    for (index in 0 until 2) {
+        msgDeque.addLast(ToastItemMsg("tt", 0f, 0f))
+    }
+}
+
+private fun testArrayDequeue() {
+    println("testArrayDequeue begin")
+    while (true) {
+        if (!msgDeque.isEmpty()) {
+            for (tipsMsg in msgDeque) {
+                if (System.currentTimeMillis() - tipsMsg.startTime >= tipsMsg.showTime) {
+                    msgDeque.remove(tipsMsg)
+                } else {
+                    msgDeque.iterator()
+                }
+                if (msgDeque.isEmpty()) {
+                    break
+                }
+            }
+        } else {
+            break
+        }
+    }
+
+    println("testArrayDequeue end")
+}
+
+class ToastItemMsg(val tipsMsg: String, var centerX: Float, var centerY: Float, val startTime: Long = System.currentTimeMillis(), val showTime: Long = 1000, val step: Float = 5f)

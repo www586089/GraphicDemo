@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.zfang.graphicdemo.activity.*
+import com.zfang.graphicdemo.activity.bitmap.BitmapActivity
 import com.zfang.graphicdemo.activity.matrix.*
 import com.zfang.graphicdemo.activity.view.ViewOpActivity
 import com.zfang.graphicdemo.activity.view.drag.ViewDragActivity
@@ -18,8 +19,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickMatrix(view: View) {
-//        MatrixActivity.start(this)
-        testException()
+        MatrixActivity.start(this)
+//        testException()
     }
 
     fun onClickPathEffect(view: View) {
@@ -72,5 +73,9 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickSurface(view: View) {
         SurfaceViewActivity.startActivity(this)
+    }
+
+    fun onClickBitmap(view: View) {
+        BitmapActivity.startActivity(this)
     }
 }
