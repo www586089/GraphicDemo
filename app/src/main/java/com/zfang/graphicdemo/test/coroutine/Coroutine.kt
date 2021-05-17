@@ -130,6 +130,11 @@ fun main() = runBlocking<Unit> {
     fillArray()
 
     testArrayDequeue()
+    val maxAnimationTime = 2
+    //2s内要出现的红包数
+    val packetCount = Math.ceil(50.toDouble() / (10 - maxAnimationTime).toDouble()).toInt() * maxAnimationTime
+    val delay = (maxAnimationTime * 1000L) / packetCount
+    println("packetCount = $packetCount, delay = ${delay}")
 }
 
 fun showNext() {
@@ -237,18 +242,17 @@ private fun fillArray() {
 
 private fun testArrayDequeue() {
     println("testArrayDequeue begin")
+
     while (true) {
-        if (!msgDeque.isEmpty()) {
-            for (tipsMsg in msgDeque) {
+        val iterator = msgDeque.iterator()
+        if (iterator.hasNext()) {
+            do {
+                val tipsMsg = iterator.next()
                 if (System.currentTimeMillis() - tipsMsg.startTime >= tipsMsg.showTime) {
-                    msgDeque.remove(tipsMsg)
-                } else {
-                    msgDeque.iterator()
+                    iterator.remove()
+                    println("testArrayDequeue remove")
                 }
-                if (msgDeque.isEmpty()) {
-                    break
-                }
-            }
+            } while (iterator.hasNext())
         } else {
             break
         }
