@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#67c">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/guide_mine_second_content"
+        android:layout_width="269dp"
+        android:layout_height="148dp"
+        android:background="@drawable/guide_mine_second"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="15秒带你玩转花盼，获得大量搭讪和积分"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="42dp"
+        android:background="@android:color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/guide_mine_know"
+        android:layout_width="96dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/bg_round_shape_18dp"
+        android:gravity="center"
+        android:text="我知道了"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="@id/guide_mine_second_content"
+        app:layout_constraintTop_toBottomOf="@id/guide_mine_second_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

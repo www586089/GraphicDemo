@@ -4,26 +4,26 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
-import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
-import com.zfang.graphicdemo.R
+import android.widget.Toast
 import com.zfang.graphicdemo.common.px2Dp
 import com.zfang.graphicdemo.utils.getScreenHeight
 import com.zfang.graphicdemo.utils.getStatusBarHeight
-import kotlinx.android.synthetic.main.activity_test.view.*
 
 class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, attrs) {
 
     private val TAG = "HollowGuideView"
-    private val maskColor = Color.parseColor("#90000000")
-    private var mHollowPoint: PointF = PointF(0f, 0f)
+    private val maskColor = Color.parseColor("#90000000") //半透明
     private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-    private val rectF = RectF()
+    private val anchorRectF = RectF()
+    private val clickRectF = RectF()
+    private var clickView: View? = null
     private var roundCornerRadius = 5.px2Dp(ctx).toFloat()
     private var guideInfo: GuideInfo? = null
+    private var guideInfoHelper: GuideInfoHelper? = null
 
     init {
         setWillNotDraw(false)
@@ -37,7 +37,8 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
             val layerId = canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null, Canvas.ALL_SAVE_FLAG)
             canvas.drawColor(maskColor)//dst
             mPaint.xfermode = xfermode
-            canvas.drawRoundRect(rectF, roundCornerRadius, roundCornerRadius, mPaint)//src
+            val roundCornerRadius = guideInfo?.cornerRadius ?: 0f
+            canvas.drawRoundRect(anchorRectF, roundCornerRadius, roundCornerRadius, mPaint)//src
             mPaint.xfermode = null
 
             canvas.restoreToCount(layerId)
@@ -45,53 +46,75 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        guideInfo ?: return
         if (childCount > 0) {
-            val childView = getChildAt(0)
-            val anchorLeft = rectF.left.toInt()
-            val anchorCenterY = (rectF.top + rectF.height() / 2).toInt()
-            val anchorCenterX = (anchorLeft + rectF.width() / 2).toInt()
-            layoutChild(childView, anchorLeft, anchorCenterY, anchorCenterX)
+            val childView = getChildAt(0) as ViewGroup
+            val anchorLeft = anchorRectF.left.toInt()
+            val anchorCenterY = (anchorRectF.top + anchorRectF.height() / 2).toInt()
+            val fakeAnchorCenterX = (anchorLeft + anchorRectF.width() * guideInfo!!.gravity).toInt()
+            layoutChild(childView, anchorLeft, anchorCenterY, fakeAnchorCenterX)
         }
     }
 
-    private fun layoutChild(childView: View, anchorLeft: Int, anchorCenterY: Int, anchorCenterX: Int) {
+    private fun layoutChild(childView: ViewGroup, anchorLeft: Int, anchorCenterY: Int, fakeAnchorCenterX: Int) {
         guideInfo ?: return
+        val left: Int
+        val top: Int
+        val right: Int
+        val bottom: Int
         if (TO_ANCHOR_LEFT == guideInfo!!.toAnchorDirection || TO_ANCHOR_RIGHT == guideInfo!!.toAnchorDirection) {
             val offsetY = guideInfo!!.let { (childView.measuredHeight * it.scale).toInt() }
-            var left = anchorLeft - childView.measuredWidth
-            var top = anchorCenterY - offsetY
-            var right = anchorLeft
-            var bottom = anchorCenterY - offsetY + childView.measuredHeight
-            childView.layout(left, top, right, bottom)
+            left = anchorLeft - childView.measuredWidth
+            top = anchorCenterY - offsetY
+            right = anchorLeft
+            bottom = anchorCenterY - offsetY + childView.measuredHeight
         } else {
             val offsetX = if (TO_ANCHOR_BOTTOM == guideInfo!!.toAnchorDirection || TO_ANCHOR_TOP == guideInfo!!.toAnchorDirection){
                 guideInfo!!.let { (childView.measuredWidth * it.scale).toInt() }
             } else {
                 0
             }
-            var right = anchorCenterX + offsetX
-            var left = right - childView.measuredWidth
-            var top = rectF.bottom.toInt()
-            var bottom = top + childView.measuredHeight
-            childView.layout(left, top, right, bottom)
+            right = fakeAnchorCenterX + offsetX
+            left = right - childView.measuredWidth
+            top = anchorRectF.bottom.toInt()
+            bottom = top + childView.measuredHeight
+        }
+        doLayoutChild(childView, left, top, right, bottom)
+    }
+
+    private fun doLayoutChild(childView: ViewGroup, left: Int, top: Int, right: Int, bottom: Int) {
+        childView.layout(left, top, right, bottom)
+        clickView?.apply {
+            clickRectF.set(x, y, x + measuredWidth, y + measuredHeight)
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        guideInfo ?: return
         Log.d(TAG, "width = ${measuredWidth}, height = ${measuredHeight}, screenHeight = ${getScreenHeight(ctx)}")
         if (childCount > 0) {
             val childView = getChildAt(0) as ViewGroup
             measureChildren(widthMeasureSpec, heightMeasureSpec)
-            val anchorLeft = rectF.left.toInt()
-            val anchorCenterY = (rectF.top + rectF.height() / 2).toInt()
-            val anchorCenterX = (anchorLeft + rectF.width() / 2).toInt()
+            val anchorLeft = anchorRectF.left.toInt()
+            val anchorCenterY = (anchorRectF.top + anchorRectF.height() / 2).toInt()
+            val fakeAnchorCenterX = (anchorLeft + anchorRectF.width() * guideInfo!!.gravity).toInt()
             Log.d(TAG, "childWidth = ${childView.measuredWidth}, childHeight = ${childView.measuredHeight}")
-            measureAnchorContentView(childView, anchorLeft, anchorCenterY, anchorCenterX)
+            measureAnchorContentView(childView, anchorLeft, anchorCenterY, fakeAnchorCenterX)
         }
     }
 
-    private fun measureAnchorContentView(childView: ViewGroup, anchorLeft: Int, anchorCenterY: Int, anchorCenterX: Int) {
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event ?: return super.onTouchEvent(event)
+        if (clickRectF.contains(event.x, event.y)) {
+            return super.onTouchEvent(event)
+        } else {
+            return true
+        }
+    }
+
+
+    private fun measureAnchorContentView(childView: ViewGroup, anchorLeft: Int, anchorCenterY: Int, fakeAnchorCenterX: Int) {
         guideInfo ?: return
         //在锚点的左边、右边
         if (TO_ANCHOR_LEFT == guideInfo!!.toAnchorDirection || TO_ANCHOR_RIGHT == guideInfo!!.toAnchorDirection) {
@@ -104,32 +127,31 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
                 val height = (scale * childView.measuredHeight).toInt()
                 doMeasureNestedChildren(childView, width, height, scale)
             }
-        } else {
-            val offsetX = if (TO_ANCHOR_BOTTOM == guideInfo!!.toAnchorDirection || TO_ANCHOR_TOP == guideInfo!!.toAnchorDirection){
+        } else {//在锚点的上边、下边
+            val offsetX = if (TO_ANCHOR_BOTTOM == guideInfo!!.toAnchorDirection || TO_ANCHOR_TOP == guideInfo!!.toAnchorDirection) {
                 guideInfo!!.let { (childView.measuredWidth * it.scale).toInt() }
             } else {
                 0
             }
-            var right = anchorCenterX + offsetX
-            var left = right - childView.measuredWidth
+            val right = fakeAnchorCenterX + offsetX
+            val left = right - childView.measuredWidth
 
             var width = childView.measuredWidth
             var height = childView.measuredHeight
             var scale = 1f
             //距离左右至少50dp
-            if (left < 50.px2Dp(ctx)) {
-                width -= 50.px2Dp(ctx)
+            if (left < 24.px2Dp(ctx)) {
+                width -= 24.px2Dp(ctx)
                 scale = (width.toFloat() / childView.measuredWidth)
                 height = (height * scale).toInt()
-            } else if (right > measuredWidth - 50.px2Dp(ctx)) {
-                width = width - (right - (measuredWidth - 50.px2Dp(ctx)))
+            } else if (right > measuredWidth - 24.px2Dp(ctx)) {
+                width -= (right - (measuredWidth - 24.px2Dp(ctx)))
                 scale = (width.toFloat() / childView.measuredWidth)
                 height = (height * scale).toInt()
             }
 
             doMeasureNestedChildren(childView, width, height, scale)
         }
-
     }
 
     private fun doMeasureNestedChildren(childView: ViewGroup, width: Int, height: Int, scale: Float) {
@@ -147,15 +169,15 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
         measureChildren(pWidthMeasureSpec, pHeightMeasureSpec)
     }
 
-    fun setDisplayHollowGuidView(view: View, guideView: View, guideInfo: GuideInfo) {
-        this.guideInfo = guideInfo
-        val x = view.x
-        val y = view.y
+    private fun setDisplayHollowGuidView(anchorView: View, clickView: View, guideView: View) {
+        val x = anchorView.x
+        val y = anchorView.y
+        this.clickView = clickView
         val statusBarHeight = getStatusBarHeight();
-        Log.d(TAG, "x = ${x}, y = ${y}, height = ${view.height}, width = ${view.width}, statusHeight = ${statusBarHeight}")
+        Log.d(TAG, "x = ${x}, y = ${y}, height = ${anchorView.height}, width = ${anchorView.width}, statusHeight = ${statusBarHeight}")
         Log.d(TAG, "guideView.width = ${guideView.width}, guideView.height = ${guideView.height}")
-        mHollowPoint.set(x + view.width / 2, y + view.height / 2)
-        rectF.set(x, y, x + view.width, y + view.height)
+        anchorRectF.set(x, y, x + anchorView.width, y + anchorView.height)
+        clickRectF.set(clickView.x, clickView.y, clickView.x + clickView.width, clickView.y + clickView.height)
         val LP = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         addView(guideView, LP)
         requestLayout()
@@ -165,14 +187,30 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
         return false
     }
 
-    fun showNext(view: View) {
-        removeAllViews()
-        val guideViewContent = LayoutInflater.from(ctx).inflate(R.layout.home_guide_layout_2, null)
-        guideViewContent.findViewById<AppCompatTextView>(R.id.guide_home_know).setOnClickListener {
+    fun showNext() {
+        if (guideInfoHelper?.hasNext() == true) {
             removeAllViews()
-            visibility = GONE
+            this.guideInfo = guideInfoHelper?.getNext()
+            guideInfo?.let { setDisplayHollowGuidView(it.anchorView, it.clickView, it.guideViewContent) }
+            requestLayout()
+        } else {
+            Toast.makeText(ctx, "没有下一步了", Toast.LENGTH_SHORT).show()
         }
-        setDisplayHollowGuidView(view, guideViewContent, GuideInfo(TO_ANCHOR_BOTTOM, scale = 0.38f))
+    }
+
+    fun showGuide(guideInfoHelper: GuideInfoHelper) {
+        visibility = VISIBLE
+        this.guideInfoHelper = guideInfoHelper
+        this.guideInfo = guideInfoHelper.getNext()
+        guideInfo?.let { setDisplayHollowGuidView(it.anchorView, it.clickView, it.guideViewContent) }
+        requestLayout()
+    }
+
+
+    fun completeGuide() {
+        guideInfoHelper?.clearGuideInfo()
+        removeAllViews()
+        visibility = GONE
     }
 
 }
