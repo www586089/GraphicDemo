@@ -15,8 +15,6 @@ import com.zfang.graphicdemo.view.test.GuideInfoHelper
 import com.zfang.graphicdemo.view.test.TO_ANCHOR_BOTTOM
 import com.zfang.graphicdemo.view.test.TO_ANCHOR_LEFT
 import kotlinx.android.synthetic.main.activity_test.*
-import kotlinx.android.synthetic.main.home_guide_layout_1.*
-import kotlinx.android.synthetic.main.home_guide_layout_2.*
 
 class TestActivity : BaseActivity() {
 

@@ -2,6 +2,7 @@ package com.zfang.graphicdemo.view.test
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -21,7 +22,6 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
     private val anchorRectF = RectF()
     private val clickRectF = RectF()
     private var clickView: View? = null
-    private var roundCornerRadius = 5.px2Dp(ctx).toFloat()
     private var guideInfo: GuideInfo? = null
     private var guideInfoHelper: GuideInfoHelper? = null
 
@@ -34,7 +34,11 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
-            val layerId = canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null, Canvas.ALL_SAVE_FLAG)
+            val layerId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
+            } else {
+                canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null, Canvas.ALL_SAVE_FLAG)
+            }
             canvas.drawColor(maskColor)//dst
             mPaint.xfermode = xfermode
             val roundCornerRadius = guideInfo?.cornerRadius ?: 0f
@@ -212,5 +216,4 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
         removeAllViews()
         visibility = GONE
     }
-
 }
