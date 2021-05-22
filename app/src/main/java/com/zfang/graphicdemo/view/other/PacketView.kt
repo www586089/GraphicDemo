@@ -66,7 +66,7 @@ class PacketView(val ctx: Context, attrs: AttributeSet): View(ctx, attrs) {
 
                     Packet(startX, endX, startY, endY, angle, bitmap, paint, random = random, computeMatrix, startRegion, endRegion).apply {
                         appearDuration = 300 //ms
-                        middleDuration = 800
+                        middleDuration = 1000
                         disappearDuration = 300
                         config(FPS60)
                     }
@@ -100,6 +100,6 @@ class PacketView(val ctx: Context, attrs: AttributeSet): View(ctx, attrs) {
         for (packet in packetArray) {
             packet.draw(canvas, canvasWidth, canvasHeight)
         }
-//        postInvalidateDelayed(DELAY)
+        postInvalidateDelayed(DELAY)
     }
 }

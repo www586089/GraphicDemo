@@ -82,7 +82,7 @@ class RedPacketProgressView(val ctx: Context, attributeSet: AttributeSet): View(
     }
 
     private fun startAnimation() {
-        seconds = 96
+        seconds = 12
         postNext()
         postInvalidate()
         val progressAnimator = ValueAnimator.ofFloat(0f, canvasWidth)
