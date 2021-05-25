@@ -32,6 +32,7 @@
         android:gravity="center"
         android:text="我知道了"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/guide_home_first_content"
         app:layout_constraintTop_toBottomOf="@id/guide_home_first_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

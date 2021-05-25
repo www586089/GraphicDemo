@@ -2,7 +2,11 @@ package com.zfang.graphicdemo.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
@@ -61,6 +65,9 @@ class TestActivity : BaseActivity() {
         guideViewContent2.findViewById<AppCompatTextView>(R.id.guide_mine_know).setOnClickListener {
             guideView.completeGuide()
         }
+        val guideViewTextContent = guideViewContent2.findViewById<AppCompatTextView>(R.id.guide_mine_second_content)
+        guideViewTextContent.text = getMineGuideContent()
+
         val guideHomeNext = guideViewContent1.findViewById<AppCompatTextView>(R.id.guide_mine_next)
         val guideHomeComplete = guideViewContent2.findViewById<AppCompatTextView>(R.id.guide_mine_know)
         GuideInfoHelper.addGuideInfo(GuideInfo(anchorView = myEarn, clickView = guideHomeNext,
@@ -69,5 +76,11 @@ class TestActivity : BaseActivity() {
             guideViewContent = guideViewContent2, toAnchorDirection = TO_ANCHOR_BOTTOM, scale = 0.28f, cornerRadius = 18.px2Dp(this).toFloat(),gravity = 0.6f))
 
         guideView.showGuide(GuideInfoHelper)
+    }
+
+    private fun getMineGuideContent() = SpannableStringBuilder("15秒带你玩转花盼，获得大量").apply {
+        append("搭讪", ForegroundColorSpan(Color.parseColor("#FFE094")), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        append("和")
+        append("搭讪", ForegroundColorSpan(Color.parseColor("#FFE094")), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 }

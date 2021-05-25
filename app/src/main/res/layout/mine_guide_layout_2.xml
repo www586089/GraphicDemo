@@ -9,12 +9,10 @@
         android:id="@+id/guide_mine_second_content"
         android:layout_width="269dp"
         android:layout_height="148dp"
-        android:background="@drawable/guide_mine_second"
-        android:gravity="center"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
+        android:background="@drawable/guide_mine_second2"
         android:text="15秒带你玩转花盼，获得大量搭讪和积分"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +35,7 @@
         android:gravity="center"
         android:text="我知道了"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/guide_mine_second_content"
         app:layout_constraintTop_toBottomOf="@id/guide_mine_second_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>
