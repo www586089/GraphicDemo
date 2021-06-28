@@ -163,7 +163,7 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
         val pHeightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
         val nestChildCount = childView.childCount
         for (index in 0 until nestChildCount) {
-            Log.d(TAG, "index = $index")
+            Log.d(TAG, "index = $index, scale = $scale")
             val child = childView.getChildAt(index)
             val LP = child.layoutParams
             LP.width = (child.measuredWidth * scale).toInt()
@@ -171,6 +171,11 @@ class HollowGuideView(val ctx: Context, attrs: AttributeSet) : ViewGroup(ctx, at
             Log.d(TAG, "child, width = ${LP.width}, height = ${LP.height}")
         }
         measureChildren(pWidthMeasureSpec, pHeightMeasureSpec)
+        Log.d(TAG, "after measure, childView.width = ${childView.measuredWidth}, height = ${childView.measuredHeight}")
+        for (index in 0 until nestChildCount) {
+            val child = childView.getChildAt(index)
+            Log.d(TAG, "index = ${index}, child, measuredWidth = ${child.measuredWidth}, measuredWidth = ${child.measuredHeight}")
+        }
     }
 
     private fun setDisplayHollowGuidView(anchorView: View, clickView: View, guideView: View) {
